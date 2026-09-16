@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Akshat Negi — Backend Engineer</title>
+<style>
+  :root{
+    --canvas:#0E0E0E;
+    --surface:#151515;
+    --raised:#1E1E1E;
+    --text:#FFFFFF;
+    --muted:rgba(255,255,255,.62);
+    --faint:rgba(255,255,255,.38);
+    --border:rgba(255,255,255,.14);
+    --accent:#5E9FE8;
+    --mono:"SFMono-Regular",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--canvas);color:var(--text);
+    font-family:var(--sans);font-size:16px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 32px;}
+  .mono{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);
+      background:rgba(14,14,14,.78);border-bottom:1px solid var(--border);}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  nav .name{font-weight:600;letter-spacing:-.01em;}
+  nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;}
+  nav ul a{font-size:14px;color:var(--muted);padding:12px 0;display:inline-block;}
+  nav ul a:hover,nav ul a:focus-visible{color:var(--text);}
+  .cta{border:1px solid var(--border);border-radius:8px;padding:9px 16px;font-size:14px;color:var(--text);}
+  .cta:hover{background:var(--raised);}
+
+  /* hero */
+  header.hero{padding:96px 0 72px;border-bottom:1px solid var(--border);}
+  .grid7{display:grid;grid-template-columns:repeat(7,1fr);gap:24px;}
+  h1{grid-column:1/6;margin:20px 0 0;font-size:clamp(38px,5.4vw,66px);line-height:1.04;letter-spacing:-.03em;font-weight:600;}
+  h1 em{font-style:normal;color:var(--faint);}
+  .hero p.lede{grid-column:1/5;margin:24px 0 0;font-size:18px;color:var(--muted);max-width:60ch;}
+  .hero aside{grid-column:6/8;align-self:end;display:flex;flex-direction:column;gap:10px;}
+  .hero aside div{font-size:14px;color:var(--muted);}
+  .hero aside .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#72BC8F;margin-right:8px;}
+  .hero-actions{grid-column:1/8;display:flex;gap:12px;margin-top:40px;flex-wrap:wrap;}
+  .btn{border-radius:8px;padding:12px 20px;font-size:15px;border:1px solid var(--border);}
+  .btn.solid{background:var(--text);color:#0E0E0E;border-color:var(--text);font-weight:500;}
+  .btn:hover{opacity:.88;}
+
+  section{padding:72px 0;border-bottom:1px solid var(--border);}
+  .sec-head{display:grid;grid-template-columns:repeat(7,1fr);gap:24px;margin-bottom:40px;align-items:baseline;}
+  .sec-head .mono{grid-column:1/2;}
+  .sec-head h2{grid-column:2/8;margin:0;font-size:28px;letter-spacing:-.02em;font-weight:500;}
+  .sec-head h2 span{color:var(--faint);}
+
+  /* skills */
+  .skills{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;}
+  .card h3{margin:0 0 4px;font-size:16px;font-weight:600;}
+  .card .sub{margin:0 0 16px;font-size:14px;color:var(--faint);}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{font-size:13px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:5px 12px;background:var(--raised);}
+  .tag.key{color:var(--text);border-color:rgba(94,159,232,.5);background:rgba(94,159,232,.12);}
+
+  /* experience */
+  .row{display:grid;grid-template-columns:repeat(7,1fr);gap:24px;padding:28px 0;border-top:1px solid var(--border);}
+  .row:first-child{border-top:none;padding-top:0;}
+  .row .when{grid-column:1/2;font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.06em;padding-top:4px;}
+  .row .body{grid-column:2/8;}
+  .row h3{margin:0;font-size:20px;font-weight:600;letter-spacing:-.01em;}
+  .row .role{margin:2px 0 12px;font-size:14px;color:var(--accent);}
+  .row ul{margin:0;padding-left:0;list-style:none;color:rgba(255,255,255,.76);font-size:15px;}
+  .row li{position:relative;padding-left:22px;margin-bottom:10px;}
+  .row li::before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;border-radius:2px;
+    background:var(--accent);box-shadow:0 0 0 3px rgba(94,159,232,.16);}
+  .stack{margin-top:12px;}
+
+  footer{padding:72px 0 88px;}
+  .foot{display:grid;grid-template-columns:repeat(7,1fr);gap:24px;align-items:end;}
+  .foot h2{grid-column:1/5;margin:12px 0 0;font-size:clamp(28px,3.6vw,44px);letter-spacing:-.025em;font-weight:600;}
+  .foot .links{grid-column:5/8;display:flex;flex-direction:column;gap:8px;font-size:15px;}
+  .foot .links a{color:var(--muted);border-bottom:1px solid transparent;width:fit-content;}
+  .foot .links a:hover{color:var(--text);border-color:var(--border);}
+  .copy{margin-top:56px;font-size:13px;color:var(--faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+
+  @media (max-width:860px){
+    .wrap{padding:0 20px;}
+    nav ul{display:none;}
+    header.hero{padding:64px 0 48px;}
+    h1,.hero p.lede,.hero aside,.hero-actions{grid-column:1/8;}
+    .hero aside{margin-top:28px;}
+    .sec-head{display:block;}
+    .sec-head h2{margin-top:8px;font-size:24px;}
+    .skills{grid-template-columns:1fr;}
+    .row{display:block;}
+    .row .when{margin-bottom:8px;}
+    .foot{display:block;}
+    .foot .links{margin-top:28px;}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="name" href="#top">Akshat Negi</a>
+    <ul>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="cta" href="mailto:akshatnegi322@gmail.com">Get in touch</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap grid7">
+    <div class="mono" style="grid-column:1/8">Backend Engineer · Dehradun, India</div>
+    <h1>I build backend systems that stay correct <em>under failure.</em></h1>
+    <p class="lede">B.Tech CS (2026). Python, FastAPI, PostgreSQL and message queues — with two internships spent redesigning SQL schemas and automating data pipelines on live production systems.</p>
+    <aside>
+      <div><span class="dot"></span>Open to backend &amp; data-platform roles</div>
+      <div>Remote · IST (UTC+5:30)</div>
+    </aside>
+    <div class="hero-actions">
+      <a class="btn solid" href="#projects">View selected work</a>
+      <a class="btn" href="https://github.com/Akshatpsy">GitHub</a>
+      <a class="btn" href="https://linkedin.com/in/akshat-negi">LinkedIn</a>
+    </div>
+  </div>
+</header>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="mono">01</div>
+      <h2>Skills <span>— what I work with day to day</span></h2>
+    </div>
+    <div class="skills">
+      <div class="card">
+        <h3>Languages</h3>
+        <p class="sub">Primary tooling for services and data work</p>
+        <div class="tags">
+          <span class="tag key">Python</span><span class="tag key">SQL</span>
+          <span class="tag">C</span><span class="tag">C++</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Backend &amp; APIs</h3>
+        <p class="sub">Service design, async work, realtime transport</p>
+        <div class="tags">
+          <span class="tag key">FastAPI</span><span class="tag">Flask</span>
+          <span class="tag">REST API design</span><span class="tag">WebSockets</span>
+          <span class="tag key">RabbitMQ / AMQP</span><span class="tag">Async workers</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Data &amp; Storage</h3>
+        <p class="sub">Schemas built to survive real production data</p>
+        <div class="tags">
+          <span class="tag key">PostgreSQL</span><span class="tag">MySQL</span>
+          <span class="tag">Schema design &amp; normalization</span><span class="tag">Query optimization</span>
+          <span class="tag">Pandas</span><span class="tag">NumPy</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Systems &amp; Reliability</h3>
+        <p class="sub">The failure modes I design for first</p>
+        <div class="tags">
+          <span class="tag key">Concurrency</span><span class="tag key">Retries &amp; dead-lettering</span>
+          <span class="tag">Idempotency</span><span class="tag">Leases &amp; heartbeats</span>
+          <span class="tag">Git</span><span class="tag">Railway · Neon · CloudAMQP</span>
+          <span class="tag">Agile / Scrum</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="mono">02</div>
+      <h2>Experience</h2>
+    </div>
+    <div class="row">
+      <div class="when">Apr — Jun<br />2026</div>
+      <div class="body">
+        <h3>Vosyn</h3>
+        <p class="role">Database Engineer Intern</p>
+        <ul>
+          <li>Redesigned SQL schemas behind several pipelines on an AI production system, cutting redundancy across tens of thousands of records while preserving referential integrity.</li>
+          <li>Diagnosed and fixed backend data defects raised in sprint reviews, tracing each issue from symptom to root cause across the pipeline and schema layer.</li>
+          <li>Drove schema and workflow decisions with a remote cross-functional Agile team.</li>
+        </ul>
+        <div class="tags stack"><span class="tag">PostgreSQL</span><span class="tag">Schema design</span><span class="tag">Data pipelines</span></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="when">Aug — Nov<br />2025</div>
+      <div class="body">
+        <h3>Live Zone Design</h3>
+        <p class="role">Python Developer Intern</p>
+        <ul>
+          <li>Automated a recurring manual data-processing workflow with scheduled Python/Pandas scripts, cutting turnaround from hours to minutes.</li>
+          <li>Built cleaning and transformation pipelines over large production datasets, standardizing messy inputs for downstream analysis.</li>
+          <li>Introduced and enforced SQL schema standards that kept production data consistent across teams.</li>
+        </ul>
+        <div class="tags stack"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">SQL</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="mono">03</div>
+      <h2>Projects</h2>
+    </div>
+    <div class="row">
+      <div class="when">01</div>
+      <div class="body">
+        <h3>Distributed Task Executor</h3>
+        <p class="role">Python · FastAPI · PostgreSQL · AMQP</p>
+        <ul>
+          <li>DAG-based task scheduler that resolves dependencies with Kahn's algorithm and dispatches work to a queue-backed pool of concurrent workers.</li>
+          <li>Fault tolerance end to end: bounded retries with dead-lettering, heartbeat/lease crash recovery, and idempotency guards — verified by force-killing workers mid-task and confirming automatic reassignment.</li>
+          <li>REST + WebSocket API driving a live-updating dashboard, deployed on Railway with hosted PostgreSQL (Neon) and CloudAMQP.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="when">02</div>
+      <div class="body">
+        <h3>Custom Language Interpreter</h3>
+        <p class="role">C · Python</p>
+        <ul>
+          <li>Full interpreter from scratch — lexer, recursive-descent parser, tree-walking evaluator — with no external parsing libraries.</li>
+          <li>Supports conditionals, loops, user-defined functions, and variable scoping, with independently testable components.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="when">03</div>
+      <div class="body">
+        <h3>Adaptive Resource Provisioning for Cloud Workloads</h3>
+        <p class="role">Python · Reinforcement Learning</p>
+        <ul>
+          <li>Auto-scaling engine pairing tabular Q-learning with Spider Monkey Optimization to choose provisioning actions from live system metrics.</li>
+          <li>Designed the state-action space and reward function, benchmarked against a Q-learning-only baseline (final-year capstone).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="when">04</div>
+      <div class="body">
+        <h3>Memory Management Visualizer</h3>
+        <p class="role">C · C++</p>
+        <ul>
+          <li>Simulated and compared First-Fit, Best-Fit, and Worst-Fit allocators, quantifying fragmentation trade-offs in real time.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="mono">04</div>
+      <h2>Education &amp; certifications</h2>
+    </div>
+    <div class="row">
+      <div class="when">2022 — 2026</div>
+      <div class="body">
+        <h3>B.Tech, Computer Science</h3>
+        <p class="role">Graphic Era University</p>
+        <ul><li>Coursework: Operating Systems, DBMS, Computer Networks, DSA.</li></ul>
+        <div class="tags stack">
+          <span class="tag">Google Data Analytics (2025)</span>
+          <span class="tag">IBM Web Development (2025)</span>
+          <span class="tag">Oracle Generative AI (2025)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot">
+      <div class="mono" style="grid-column:1/8">05 — Contact</div>
+      <h2>Let's build something that doesn't break.</h2>
+      <div class="links">
+        <a href="mailto:akshatnegi322@gmail.com">akshatnegi322@gmail.com</a>
+        <a href="tel:+918126177630">+91 8126177630</a>
+        <a href="https://github.com/Akshatpsy">github.com/Akshatpsy</a>
+        <a href="https://linkedin.com/in/akshat-negi">linkedin.com/in/akshat-negi</a>
+      </div>
+    </div>
+    <div class="copy">
+      <span>© 2026 Akshat Negi</span>
+      <span>Dehradun, India · Available remote</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
